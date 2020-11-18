@@ -45,9 +45,8 @@ public class Connexion extends javax.swing.JFrame {
         IdentifiantCo = jTextFieldNU.getText();//on prend le text qui se trouve dans jTextFieldNU
         String MDPCO = jPasswordFieldNU.getText();//on prend le text qui se trouve dans jPasswordFieldNU
         Boolean ReponseVerificationCo = false;//on initialise ReponseVerificationCo a false
-System.out.println(IdentifiantCo);
 //connexion rapide pour la premiere connexion et initialisation de la BDD
-        if (MDPCO.equals("CoPourInitialisation") & IdentifiantCo.equals("CoPourInitialisation") || Identification.connexionProgramme(IdentifiantCo, MDPCO) ) {//on envoie l'identifiant et le mdp
+        if (Identification.connexionProgramme(IdentifiantCo, MDPCO) ) {//on envoie l'identifiant et le mdp
             ReponseVerificationCo = true;
         }
         return ReponseVerificationCo;
@@ -190,7 +189,7 @@ System.out.println(IdentifiantCo);
             System.out.println("Bien fait pour Profil 1");
         }
         //-------------------------------------------------------------------------------Creation de la Table Personnel-------------------------------------------------------------------------------
-        String sqlSetIniPer = "CREATE TABLE IF NOT EXISTS personnel(idPersonnel INT AUTO_INCREMENT PRIMARY KEY, nomPersonnel VARCHAR(50), prenomPersonnel VARCHAR(50), emailPersonnel VARCHAR(50), telPersonnel VARCHAR(50), pseudo VARCHAR(50), mdp VARCHAR(50), idProfil INT NOT NULL, CONSTRAINT FK_personnel_profil FOREIGN KEY(idProfil) REFERENCES profil(idProfil) ON DELETE CASCADE ON UPDATE CASCADE);";
+        String sqlSetIniPer = "CREATE TABLE IF NOT EXISTS personnel (idPersonnel INT AUTO_INCREMENT PRIMARY KEY, nomPersonnel VARCHAR(50), prenomPersonnel VARCHAR(50), emailPersonnel VARCHAR(50), telPersonnel VARCHAR(50), pseudo VARCHAR(50), mdp VARCHAR(50), idProfil INT NOT NULL, CONSTRAINT FK_personnel_profil FOREIGN KEY(idProfil) REFERENCES profil(idProfil) ON DELETE CASCADE ON UPDATE CASCADE,  UNIQUE `pseudo` (`pseudo`));";
         int TuplesSetIniPer = DaoSIO.getInstance().requeteAction(sqlSetIniPer);
         if (TuplesSetIniPer == 1) {
             System.out.println("Bien fait pour Profil 1");
@@ -232,7 +231,7 @@ System.out.println(IdentifiantCo);
             System.out.println("Bien fait pour Profil 1");
         }
         
-        String sql = "INSERT INTO `categorie`(`libelleCategorie`) VALUES ('testCategorie0'),('testCategorie1'),('testCategorie2'),('testCategorie3'),('testCategorie4')";
+        String sql = "INSERT INTO `categorie`(`idCategorie`,`libelleCategorie`) VALUES (1,testCategorie0'),(2,'testCategorie1'),(3,'testCategorie2'),(4,'testCategorie3'),(5,'testCategorie4')";
         int Tuples = DaoSIO.getInstance().requeteAction(sql);
         if (Tuples == 1) {
             System.out.println("Bien fait");
@@ -240,7 +239,7 @@ System.out.println(IdentifiantCo);
         sql = null;
         Tuples = 0;
         //--------------------------------------------------------Insertion dans la table profil-------------------------------------
-        sql = "INSERT INTO `profil`(`libelleProfil`) VALUES ('Admin'),('Agent')";
+        sql = "INSERT INTO `profil`(`idProfil`,`libelleProfil`) VALUES (1,'Admin'),(2,'Agent')";
         Tuples = DaoSIO.getInstance().requeteAction(sql);
         if (Tuples == 1) {
             System.out.println("Bien fait");
@@ -248,7 +247,7 @@ System.out.println(IdentifiantCo);
         sql = null;
         Tuples = 0;
         //--------------------------------------------------------Insertion dans la table personnel-------------------------------------
-        sql = "INSERT INTO `personnel`(`nomPersonnel`, `prenomPersonnel`, `emailPersonnel`, `telPersonnel`, `pseudo`, `mdp`, `idProfil`) VALUES ('nom','prenom','email','tel','pseudo','mdp',1),('nom2','prenom2','email2','tel2','pseudo2','mdp2',2),('nom3','prenom3','email3','tel3','pseudo3','mdp3',1),('nom4','prenom4','email4','tel4','pseudo4','mdp4',2),('nom5','prenom5','email5','tel5','pseudo5','mdp5',1),('nom6','prenom6','email6','tel6','pseudo6','mdp6',2),('nom7','prenom7','email7','tel7','pseudo7','mdp7',1)";
+        sql = "INSERT INTO `personnel`(`idPersonnel`,`nomPersonnel`, `prenomPersonnel`, `emailPersonnel`, `telPersonnel`, `pseudo`, `mdp`, `idProfil`) VALUES (1,'nom','prenom','email','tel','admin','admin',1),(2,'nom2','prenom2','email2','tel2','agent','agent',2),(3,'nom3','prenom3','email3','tel3','pseudo3','mdp3',1),(4,'nom4','prenom4','email4','tel4','pseudo4','mdp4',2),(5,'nom5','prenom5','email5','tel5','pseudo5','mdp5',1),(6,'nom6','prenom6','email6','tel6','pseudo6','mdp6',2),(7,'nom7','prenom7','email7','tel7','pseudo7','mdp7',1)";
         Tuples = DaoSIO.getInstance().requeteAction(sql);
         if (Tuples == 1) {
             System.out.println("Bien fait");

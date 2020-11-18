@@ -346,6 +346,9 @@ quantiter = Integer.parseInt(jTextFieldQuantiterProduit.getText());
 //                System.out.println("ca fonctionne");
 
 prixTotal = prix*quantiter;
+                if (OK) {
+                    
+                }
                 ValidationVente Validation = new ValidationVente();
                 Validation.show();
             }

@@ -83,6 +83,7 @@ public class Accueil extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         selectionProduit1 = new com.mycompany.vente.SelectionProduit();
         jButtonAdmin = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -101,6 +102,13 @@ public class Accueil extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("Déconnexion$");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -111,7 +119,9 @@ public class Accueil extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabelProfilPersonnel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonAdmin)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -125,6 +135,8 @@ public class Accueil extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButtonAdmin)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton1)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jTabbedPane1))
                 .addContainerGap())
@@ -140,6 +152,11 @@ public class Accueil extends javax.swing.JFrame {
         }else{ JOptionPane.showMessageDialog(rootPane,"Impossible vous n'etes pas un Administrateur");}
         
     }//GEN-LAST:event_jButtonAdminActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        this.setVisible(false);
+        Page.pageConnexion.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -190,7 +207,8 @@ public class Accueil extends javax.swing.JFrame {
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
         System.out.println(format.format(date));
-        System.out.println("id client = " + SelectionClient.idClient);
+        if (SelectionClient.idClient != null & SelectionProduit.idProduit != null) {
+            System.out.println("id client = " + SelectionClient.idClient);
         System.out.println("id Produit = " + SelectionProduit.idProduit);
         String sqlSetVente = "INSERT INTO `vente`(`dateVente`, `idClient`, `idPersonnel`) VALUES ('" + format.format(date) + "','" + SelectionClient.idClient + "','" + idPersonnel + "')";
         int TuplesSetVente = DaoSIO.getInstance().requeteAction(sqlSetVente);
@@ -209,6 +227,10 @@ public class Accueil extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(SelectionProduit.class.getName()).log(Level.SEVERE, null, ex);
         }
+        }else{
+        JOptionPane.showMessageDialog(null,"Il manque des informations pour la vente");
+        }
+        
         System.out.println("-------------------------------------------------Fin de setVente---------------------------------------------------------");
     }
 
@@ -254,6 +276,7 @@ public class Accueil extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonAdmin;
     private javax.swing.JLabel jLabelProfilPersonnel;
     private javax.swing.JPanel jPanel1;
